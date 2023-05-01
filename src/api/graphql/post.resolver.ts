@@ -29,8 +29,15 @@ export class PostResolver {
 @injectable()
 @Resolver(() => Post)
 export class PostFieldResolver implements ResolverInterface<Post> {
+  constructor(private postService: PostService) {}
+
   @FieldResolver()
   graphQL(@Root() root: Post) {
     return true;
+  }
+
+  @FieldResolver()
+  randomId(@Root() root: Post, @Arg('id') id: string) {
+    return this.postService.randomId(id);
   }
 }

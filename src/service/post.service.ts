@@ -24,4 +24,13 @@ export class PostService {
   createPost(newPost: PostCreate): Promise<Post> {
     return this.postRepository.save(newPost);
   }
+
+  async randomId(id: string) {
+    try {
+      const post = await this.postRepository.findOneOrFail({ where: { id } });
+      return post.id + 12;
+    } catch {
+      throw new CustomExternalError([ErrorCode.ARTICLE_NOT_FOUND]);
+    }
+  }
 }
